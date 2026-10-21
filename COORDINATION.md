@@ -56,7 +56,7 @@ Branch: **`arena/f4788cee-koreatrip4`** (platform-assigned; session + integratio
 | T6 | Verify dining/cafes/shopping; flag rest | done | arena-f4788cee | `data/itinerary.json` | 28 of 46 venues unverified → blank |
 | T7 | Build Pages site (dashboard + subpages) | done | arena-f4788cee | `docs/`, `tools/build_site.py` | 9 generated pages |
 | T8 | Integration checks (links/data integrity) | done | arena-f4788cee | `tools/check_links.py` | ALL CHECKS PASSED; preview HTTP 200 ×9 pages |
-| T9 | PR → merge → confirm Pages live | in progress | arena-f4788cee | — | PR #3; merged `main` first to resolve collision (below) |
+| T9 | PR → merge → confirm Pages live | done | arena-f4788cee | — | PR #3 merged; Pages build `built`; both sites verified live |
 
 ### Verification record (2026-10-21)
 
@@ -80,7 +80,10 @@ Mondays; F-18 Kyoja 2026 relocation. All are **needs review**, non-blocking per 
 ### PR / merge record
 
 - PR: [#3](https://github.com/buffedlizard55-lab/Koreatrip4/pull/3) — `arena/f4788cee-koreatrip4` → `main`
-- Merge result / Pages: recorded in a follow-up commit after the merge + Pages build complete.
+- Merge result: **PR #3 MERGED** 2026-10-21T08:00:55Z, merge commit `25bf6b9eaf155ffaf296936ac18e095ccb29d0bc`.
+- GitHub Pages: build for `25bf6b9` reported **built**; verified live by fetching both URLs on 2026-10-21:
+  root site (arena/12929267) https://buffedlizard55-lab.github.io/Koreatrip4/ and this session's build
+  https://buffedlizard55-lab.github.io/Koreatrip4/docs/ — both return the expected dashboards.
 
 ### Collision log
 
