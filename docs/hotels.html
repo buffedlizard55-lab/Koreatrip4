@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hotels · Korea Trip Itinerary</title>
+<link rel="stylesheet" href="assets/style.css"></head>
+<body>
+<header class="top"><div class="wrap">
+<h1>🇰🇷 Korea Trip — Seoul &amp; Busan</h1>
+<p><b>Nov 1–9, 2026 (year assumed — see flag I-01)</b> · 2 adults · Seoul (Myeongdong) → Busan (Haeundae)</p>
+<p class="small" style="color:#dcebfb">Verified against official sources on 2026-10-21. Every value marked Verified was read on an official source (venue/operator/government tourism site) on the date above. Anything not confirmable from an official source is left blank and flagged — never inferred. Hours and prices can change; re-check the linked official page before you go.</p>
+</div></header>
+<nav class="mainnav"><div class="wrap"><a href="index.html" class="">🏠 Dashboard</a><a href="days.html" class="">🗓️ Day by Day</a><a href="attractions.html" class="">🏯 Attractions & Markets</a><a href="food.html" class="">🍜 Food, Cafes & Bars</a><a href="shopping.html" class="">🛍️ Shopping</a><a href="transport.html" class="">🚇 Transport</a><a href="hotels.html" class="active">🛏️ Hotels</a><a href="flagged.html" class="">🚩 Flagged for Review</a><a href="sources.html" class="">📚 Sources</a></div></nav>
+<main><div class="wrap">
+<h2>Hotels</h2><p>Check-in/out times are published only if read on the hotel's official website — confirm against your booking confirmations.</p><div class="tablewrap"><table data-filterable>
+<thead><tr><th>Place</th><th>City / Area / Address</th><th>Trip day</th><th>Hours (verified)</th><th>Closed days</th><th>Price / Check-in–out</th><th>Nearest station</th><th>Status</th><th>Official source</th></tr></thead>
+<tbody><tr>
+<td><b>Stanford Hotel Myeongdong</b><span class="sub">As written: Stanford Hotel in Myeongdong</span><span class="sub">Your itinerary: “Check out by 12:00pm on Nov 9; try to leave by 10:00am.”</span><span class="notes">• Check-in / check-out times could not be confirmed on the hotel&#x27;s official website during this pass — see flag F-13. Confirm against your booking confirmation.</span></td>
+<td>Seoul<span class="sub">Myeongdong, Jung-gu</span><span class="sub">84, Namdaemun-ro, Jung-gu, Seoul (opposite Lotte Department Store; same building as Apple Store — per hotel FAQ)</span></td>
+<td>Day 1, Day 9</td>
+<td><span class="blank">—</span></td>
+<td><span class="blank">—</span></td>
+<td><span class="blank">—</span></td>
+<td>Euljiro 1-ga Station (Line 2), Exits 7·8 by the hotel block; Exit 7 connects to Lotte Dept. Store B1 across the street</td>
+<td><span class="badge b-partial">Partial</span></td>
+<td class="src"><a href="https://www.stanford-hotel.com/myeongdong" target="_blank" rel="noopener">Stanford Hotel — official site (Myeongdong) ↗</a><br><a href="https://global.lotteshopping.com/eng/store/main?cstrCd=0001" target="_blank" rel="noopener">Lotte Dept. Store (official) — directions for this block ↗</a></td></tr><tr>
+<td><b>L7 Haeundae by LOTTE</b><span class="sub">As written: L7 Haeundae Lotte Hotel</span><span class="sub">Your itinerary: “Check in &amp; relax on Nov 9; walk to Haeundae Beach and Haeundae Market in the evening.”</span><span class="notes">• The official LOTTE Hotels page for this property exists (link) but its address / check-in–out details could not be machine-read during this pass, so no values are published here — see flag F-14. Confirm on the official page / booking confirmation.</span></td>
+<td>Busan<span class="sub">Haeundae</span><span class="sub"><span class="blank">—</span></span></td>
+<td>Day 9</td>
+<td><span class="blank">—</span></td>
+<td><span class="blank">—</span></td>
+<td><span class="blank">—</span></td>
+<td><span class="blank">—</span></td>
+<td><span class="badge b-unverified">Unverified</span></td>
+<td class="src"><a href="https://www.lottehotel.com/haeundae-l7/en" target="_blank" rel="noopener">LOTTE Hotels — L7 Haeundae (official property page) ↗</a></td></tr></tbody></table></div><div class="card"><h3>Hotel → KTX (Day 9)</h3>
+<p>Stanford Hotel Myeongdong → Seoul Station: taxi per itinerary, or Line 4 (Myeong-dong/Hoehyeon → Seoul Station; Lines 1 &amp; 4 + KTX per Seoul City). Busan Station → L7 Haeundae: taxi per itinerary. Details on the <a href="transport.html">Transport</a> page.</p></div>
+</div></main>
+<footer><div class="wrap">
+<p>Built from <code>data/itinerary.json</code> in the <a href="https://github.com/buffedlizard55-lab/Koreatrip4" target="_blank" rel="noopener">Koreatrip4 repo</a> · Verification pass 2026-10-21 · Hours, fares and closures change — always re-check the linked official page before you go. Items marked Unverified are deliberately blank and listed on the <a href="flagged.html">Flagged for Review</a> page.</p>
+</div></footer>
+<script>
+document.querySelectorAll('input.filter').forEach(function(inp){
+  inp.addEventListener('input',function(){
+    var q=inp.value.toLowerCase();
+    document.querySelectorAll('table[data-filterable] tbody tr').forEach(function(tr){
+      tr.style.display = tr.textContent.toLowerCase().indexOf(q)>-1 ? '' : 'none';
+    });
+  });
+});
+(function(){
+  var today = new Date().toISOString().slice(0,10);
+  document.querySelectorAll('[data-date]').forEach(function(el){
+    if(el.getAttribute('data-date')===today){ el.classList.add('today'); el.insertAdjacentHTML('afterbegin','<span class="badge b-high">TODAY</span> '); }
+  });
+})();
+</script>
+</body></html>
