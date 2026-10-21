@@ -203,4 +203,8 @@ Mondays; F-18 Kyoja 2026 relocation. All are **needs review**, non-blocking per 
 
 ### Verification, checks, PR and deployment
 
-Pending: run the existing docs integrity checker and root-site smoke check; add the isolated CI files in the scope above; update with PR/merge status and confirm the post-merge GitHub Pages build without changing either site.
+- Existing docs build: `python3 tools/check_links.py` passed — 9 pages, 46 venues and 7 transport rows; local links and source references resolve.
+- Root build: `PYTHONDONTWRITEBYTECODE=1 python3 scripts/check-root-site.py` passed — 8 pages, all local references and HTML anchors resolve. No published page or data file was changed.
+- GitHub Pages API: status `built`, public URL `https://buffedlizard55-lab.github.io/Koreatrip4/`, source `main:/`, HTTPS enforced. Latest observed Pages build at `2026-10-21T08:02:48Z` was for commit `35f2de2`; `gh run list` also showed successful `pages build and deployment` runs on `main`.
+- Existing site outputs remain at the root URL and `/docs/`. No second publishing workflow was added; `site-check.yml` only runs the two integrity checks.
+- Pull request: not opened yet. This session's isolated CI change is ready for PR after its required rebase/push. After merge, record the PR result and re-check the latest Pages build for the merge commit.
