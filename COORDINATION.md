@@ -19,7 +19,7 @@
 | `TASK-03` | Line-by-line verification of Days 7–9 (Itaewon, Open Sunday Day 8, Seoul Station KTX to Busan, L7 Haeundae by LOTTE, Haeundae Beach & Traditional Market) | `done` | `5d411753` | `data/itinerary-data.js`, `itinerary.html` |
 | `TASK-04` | Public Transportation & Hotel Route Engineering (ICN to Myeongdong, Daily Seoul Metro/Bus Routes, KTX & Busan Metro/Bus Routes) | `done` | `5d411753` | `transit.html`, `data/itinerary-data.js` |
 | `TASK-05` | Irregularities Audit & "Flagged for Review" Page Construction | `done` | `5d411753` | `flagged.html`, `data/itinerary-data.js` |
-| `TASK-06` | Final Integration, Responsive Static Site Build, Link Verification, PR & GitHub Pages Deployment | `in progress` | `5d411753` | `index.html`, `assets/styles.css`, `assets/app.js`, `.github/workflows/pages.yml`, `README.md` |
+| `TASK-06` | Final Integration, Responsive Static Site Build, Link Verification, PR & GitHub Pages Deployment | `done` | `5d411753` | `index.html`, `assets/styles.css`, `assets/app.js`, `.github/workflows/pages.yml`, `README.md` |
 
 ---
 
@@ -78,4 +78,10 @@ See `flagged.html` for full details. Key flags:
 - **2026-10-21 (Session `5d411753`)**: Created `COORDINATION.md`, claimed all tasks `TASK-01`–`TASK-06`.
 - **2026-10-21 (Session `5d411753`)**: Completed official source verification for all Days 1–9 entries, transit routes, dining/shopping, and flagged irregularities.
 - **2026-10-21 (Session `5d411753`)**: Built static site — `index.html`, `itinerary.html`, `verification-table.html`, `transit.html`, `dining-shopping.html`, `flagged.html`, `assets/styles.css`, `assets/app.js`, `data/itinerary-data.js`, `.github/workflows/pages.yml`, `README.md`.
-- **Next**: Commit and push, create PR from `arena/5d411753-koreatrip4` to `main`, merge, confirm GitHub Pages deploy, record PR link in `COORDINATION.md`.
+- **2026-10-21 (Session `5d411753`)**: Committed and pushed site files to `arena/5d411753-koreatrip4`. Created PR #5, merged into main via `gh pr merge 5 --merge`.
+- **2026-10-21 (Session `5d411753`)**: GitHub Pages deployment succeeded — site live at `https://buffedlizard55-lab.github.io/Koreatrip4/`. Pages status: built, source: main branch at path `/`.
+- **2026-10-21 (Session `5d411753`)**: Verified live subpages — `itinerary.html`, `verification-table.html`, `transit.html`, `dining-shopping.html`, `flagged.html` all render correctly with verified source links.
+- **PR link**: https://github.com/buffedlizard55-lab/Koreatrip4/pull/5
+- **Merge result**: Merged successfully (merge commit `d6d761a` on main).
+- **Site URL**: https://buffedlizard55-lab.github.io/Koreatrip4/
+- **Pages status**: Built and deployed successfully.
