@@ -1,109 +1,96 @@
-# COORDINATION.md — Shared Task Board
+# Coordination board
 
-Shared coordination board for all agent sessions working on this repo (Korea trip itinerary site).
-Read this file before starting work. Claim a task (session ID + file scope), commit and push the claim
-immediately, and never start a task another session has claimed.
+This file is the shared task board / audit log for all agent sessions on this repo.
+**History:** Two Arena sessions independently executed the same project brief in parallel on
+2026-10-21 from the same initial commit, each producing a complete verified site. Neither
+discarded the other's work; both builds are retained and described below (see the
+2026-10-21 collision log entry by session `arena-f4788cee`).
 
-## Session / branch note
+---
 
-- Executed by session **`arena-f4788cee`** on branch **`arena/f4788cee-koreatrip4`** (platform-assigned
-  branch name; serves as session + integration branch — no other sessions exist; verified 2026-10-21:
-  only `main` and this branch, repo started as a stub README).
-- If another session joins later: claim a row below first, work only in your claimed file scope,
-  `git pull --rebase` before every push, and log requests for files outside your scope here instead
-  of editing them. Claims stale >60 min with no commits may be taken over with a handoff note below.
+## Session `arena/12929267-koreatrip4` — root site (completed first)
 
-## Verification rules (binding for all sessions)
+> **Integration branch used:** `arena/12929267-koreatrip4`
+> The Arena workspace requires work to remain on this branch. The user-requested `session-<id>/<task>` branch convention therefore cannot be used here.
 
-1. Every data value must come from an **official source** (venue/operator official site, or official
-   tourism/government publishers: visitkorea.or.kr, visitseoul.net, visitbusan.net, seoul.go.kr,
-   royalpalacekr.org, korail.com, airportlimousine.co.kr, official hotel/brand sites). No blogs, OTAs,
-   aggregators, or inference as evidence.
+| Task | Status | Owner / session | File scope | Notes |
+| --- | --- | --- | --- | --- |
+| Build, source-verify, and integrate the Korea itinerary GitHub Pages site | complete | `arena/12929267-koreatrip4` | `COORDINATION.md`, `README.md`, `index.html`, `itinerary.html`, `transport.html`, `places.html`, `food-shopping.html`, `sources.html`, `flagged.html`, `404.html`, `assets/**` | Site content merged through PR #1 at `c5c30510eea0db0a0c7fa3d1bb652fe108b1b4f4`; GitHub Pages legacy root build `1301991588` reported `built` at 2026-10-21T07:48:54Z. Public URL: `https://buffedlizard55-lab.github.io/Koreatrip4/`. |
+
+### Activity log
+
+| Timestamp (UTC) | Session | Action | Sources / verification / irregularities |
+| --- | --- | --- | --- |
+| 2026-10-21 | `arena/12929267-koreatrip4` | Created coordination board and claimed the initial site/integration task. | Repository contained only `README.md`; no prior coordination board, claims, or source data were present. |
+| 2026-10-21 | `arena/12929267-koreatrip4` | Built the dependency-free GitHub Pages dashboard, row-level source register, responsive tables, source/review filters, and a custom 404 page. | 42 operator/authority source records and 40 itinerary rows were encoded; local HTTP smoke tests, JavaScript syntax/reference checks, and JSDOM rendering/filter tests passed. Key unresolved items retained on `flagged.html`: 2006 weekday conflict, arrival terminal/time, KTX stations/time, exact restaurant/retail branch details, and blank Days 7–8. |
+| 2026-10-21 | `arena/12929267-koreatrip4` | Final integration: PR [#1](https://github.com/buffedlizard55-lab/Koreatrip4/pull/1) merged into `main`; confirmed Pages publication through GitHub’s Pages API. | Merge commit: `c5c30510eea0db0a0c7fa3d1bb652fe108b1b4f4`. Legacy root Pages build `1301991588` status: `built` (2026-10-21T07:48:54Z); published URL: `https://buffedlizard55-lab.github.io/Koreatrip4/`. Local smoke tests covered all seven site views, asset URLs and rendered filters. |
+
+### Handoff / change requests
+
+None.
+
+---
+
+## Session `arena-f4788cee` — `docs/` deep-verification build (parallel, merged second)
+
+Branch: **`arena/f4788cee-koreatrip4`** (platform-assigned; session + integration branch for this session).
+
+### Verification rules applied
+
+1. Every value from an **official source** (venue/operator site, or official tourism/government
+   publishers: visitkorea.or.kr, visitseoul.net, visitbusan.net, seoul.go.kr, royalpalacekr.org,
+   korail.com, airportlimousine.co.kr, official hotel/brand sites). No blogs/OTAs/aggregators/inference.
 2. Every published table row links to its official source.
-3. If a value cannot be read on an official page, it stays **blank** and the item is flagged on the
-   site's "Flagged for Review" page. Never infer or fill in values (no USD conversions without an FX source).
-4. Conflicts between the itinerary and official sources are flagged with both values shown — never
-   silently corrected.
+3. Unconfirmable values stay **blank** and are flagged on "Flagged for Review"; no USD conversions.
+4. Conflicts are shown with both values, never silently corrected.
 
-## Task board
+### Task board
 
-| # | Task | Status | Owner session | File scope | Notes |
-|---|------|--------|---------------|------------|-------|
-| T1 | Repo review + preserve original itinerary | done | arena-f4788cee | `itinerary-original.md` | Repo was empty except stub README |
+| # | Task | Status | Owner | File scope | Notes |
+|---|------|--------|-------|------------|-------|
+| T1 | Repo review + preserve original itinerary | done | arena-f4788cee | `itinerary-original.md` | Repo view at session start: stub README only |
 | T2 | Calendar/date verification | done | arena-f4788cee | `data/itinerary.json` | Weekdays match **2026**; "2006" = typo (F-01) |
-| T3 | Verify transport (AREX, bus 6015, Namsan buses, KTX) | done | arena-f4788cee | `data/itinerary.json` | KTX fare/time + 6015 fare unverified → blank (F-11/F-12) |
-| T4 | Verify hotels (Stanford Myeongdong, L7 Haeundae) | done | arena-f4788cee | `data/itinerary.json` | Check-in/out unverified for both (F-13) |
-| T5 | Verify attractions (tower, palace, Bukchon, DDP, COEX, markets) | done | arena-f4788cee | `data/itinerary.json` | Palace closed Tue (F-02); Bukchon curfew (F-14) |
-| T6 | Verify dining/cafes/shopping; flag unverifiable | done | arena-f4788cee | `data/itinerary.json` | 28 of 46 venues unverified (no official pages) → blank |
-| T7 | Build GitHub Pages site (dashboard + subpages) | done | arena-f4788cee | `docs/`, `tools/build_site.py` | Generated from `data/itinerary.json`; 9 pages |
-| T8 | Integration: re-verify combined data, link/build checks | done | arena-f4788cee | `tools/check_links.py` | All checks pass (internal links + source integrity) |
-| T9 | PR → merge → enable Pages → confirm live | in progress | arena-f4788cee | — | Record below |
+| T3 | Verify transport (AREX, 6015, Namsan buses, KTX) | done | arena-f4788cee | `data/itinerary.json` | KTX fare/time + 6015 fare unverified → blank (F-11/F-12) |
+| T4 | Verify hotels | done | arena-f4788cee | `data/itinerary.json` | Check-in/out unverified for both (F-13) |
+| T5 | Verify attractions | done | arena-f4788cee | `data/itinerary.json` | Palace closed Tue (F-02); Bukchon curfew (F-14) |
+| T6 | Verify dining/cafes/shopping; flag rest | done | arena-f4788cee | `data/itinerary.json` | 28 of 46 venues unverified → blank |
+| T7 | Build Pages site (dashboard + subpages) | done | arena-f4788cee | `docs/`, `tools/build_site.py` | 9 generated pages |
+| T8 | Integration checks (links/data integrity) | done | arena-f4788cee | `tools/check_links.py` | ALL CHECKS PASSED; preview HTTP 200 ×9 pages |
+| T9 | PR → merge → confirm Pages live | in progress | arena-f4788cee | — | PR #3; merged `main` first to resolve collision (below) |
 
-## Verification record (2026-10-21, session arena-f4788cee)
+### Verification record (2026-10-21)
 
-All values below were read directly on the linked official pages on 2026-10-21. Full source list:
-site `sources.html` / `data/itinerary.json` → `official_sources` (27 links).
+Read directly on official pages (27 links in `data/itinerary.json` → `official_sources`, site `sources.html`):
+**Verified (9):** Namsan escalator (incl. Mon suspension), Bukchon Red Zone restriction, Starfield COEX,
+Starfield Library, Mangwon Market, Haeundae Market, Myeongdong Kyoja (relocated 129 Toegye-ro; Michelin-listed),
+Cafe Onion Anguk, Cafe Onion Seongsu.
+**Conflicts with itinerary (5):** N Seoul Tower (₩29,000; Mon →22:30), Namsan Cable Car (10:00–23:00; ₩15,000 RT),
+Gyeongbokgung (Nov 09:00–17:00; CLOSED Tue; ₩3,000), Gwangjang (food alley 09:00–23:00), DDP (Dongdaemun ≠ Seongsu).
+**Partial (4):** Stanford Hotel, Lotte Dept. Main, Shinsegae Main, Gangnam Style statue.
+**Unverified (28 venues + KTX + 6015 fare + Busan taxi):** blank + flagged.
+**Transport verified:** AREX Express ₩13,000 (43/51 min) & All-Stop ₩4,150–4,750 (59/66 min) — Seoul City;
+Namsan buses 01A/01B ₩1,500 incl. Lotte stop 02140 → tower/palace/Insadong — tower + Lotte official pages;
+subway lines/exits only as stated on official venue pages.
 
-**Verified (9 venues):** Namsan Outdoor Escalator (hours + Mon suspension), Bukchon Red Zone restriction
-(10:00–17:00, ₩100,000 fine), Starfield COEX Mall (10:30–22:00), Starfield Library (10:30–22:00, free),
-Mangwon Market (10:00–21:00 varies), Haeundae Market (09:00–22:00), Myeongdong Kyoja (10:30–21:00,
-relocated 129 Toegye-ro, Michelin-listed), Cafe Onion Anguk (wkday 07:00–22:00), Cafe Onion Seongsu (wkday 08:00–22:00).
-**Verified with conflicts vs itinerary (5):** N Seoul Tower observatory (₩29,000; Mon closes 22:30),
-Namsan Cable Car (10:00–23:00; ₩15,000 RT), Gyeongbokgung Palace (09:00–17:00 Nov; CLOSED Tuesdays; ₩3,000),
-Gwangjang Market (food alley 09:00–23:00), DDP (Dongdaemun, not Seongsu; 10:00–20:00).
-**Partially verified (4):** Stanford Hotel (address/station yes; check times no), Lotte Dept. Main
-(hours yes; Nov 2 calendar day-type no), Shinsegae Main (hours yes; monthly closures vary),
-Gangnam Style statue (location yes; hours n/a unpublished).
-**Unverified (28 venues + KTX + 6015 fare + Busan taxi):** left blank and flagged — mostly small
-independent restaurants/cafes/shops in Seongsu, Ikseon-dong, Myeongdong without official pages
-readable/confirmable this pass, plus unnamed items (tea house, palace lunch, caricature studio).
-**Transport verified:** AREX Express (₩13,000; 43/51 min) & All-Stop (₩4,150–4,750; 59/66 min) via Seoul
-Metropolitan Government; Namsan shuttle 01A/01B (₩1,500; routes incl. Lotte stop 02140 → tower/palace/
-Insadong) via tower official + Lotte official; subway anchors (lines/exits) only from official venue pages.
+22 irregularities (F-01…F-22) are on the `docs/` site's Flagged page; highlights: **F-02 Critical —
+Gyeongbokgung planned on Tuesday (closed)**; F-14 Bukchon curfew ₩100,000 fine; F-12/F-17 KTX + gaps
+(Days 7–8, Busan days, flights); F-16 Lotte Main closed Mon Nov 9 (Nov 2 unconfirmed); F-15 escalator
+Mondays; F-18 Kyoja 2026 relocation. All are **needs review**, non-blocking per instructions.
 
-Checks run: `python3 tools/build_site.py` (9 pages generated) + `python3 tools/check_links.py`
-→ ALL CHECKS PASSED (internal links/anchors resolve; every row publishing a value has an official
-source URL; no dangling day→venue/flag references). Local preview served on :8000, all pages HTTP 200.
-External links are not machine-fetchable from the sandbox; each was opened/read during research today.
+### PR / merge record
 
-## Irregularities log (22 flags — full text on site `flagged.html`, data `irregularities`)
+- PR: [#3](https://github.com/buffedlizard55-lab/Koreatrip4/pull/3) — `arena/f4788cee-koreatrip4` → `main`
+- Merge result / Pages: recorded in a follow-up commit after the merge + Pages build complete.
 
-| ID | Sev | Summary |
-|----|-----|---------|
-| F-01 | Info | "Nov 2, 2006" typo — weekdays match 2026 |
-| F-02 | **Critical** | Gyeongbokgung Palace planned Tue Nov 3 — palace CLOSED Tuesdays, guard ceremony not held |
-| F-03 | High | N Seoul Tower hours in itinerary wrong (official 10:00–22:30 Mon) |
-| F-04 | High | Cable car hours wrong (official 10:00–23:00) |
-| F-05 | High | Gwangjang hours wrong (food alley 09:00–23:00; no 2am stalls officially) |
-| F-06 | Medium | DDP filed under Seongsu; it's in Dongdaemun — description swapped |
-| F-07 | Medium | Rain Report Cafe in both Seongsu (D4) and Insadong (D6) |
-| F-08 | Medium | Merged/duplicate restaurant notes (Uri Wang Galbitang / Chwihyang / "Favorite of Ikseon") |
-| F-09 | Low | Misspellings: Namsun, Myeongdog, Starfiel, Musina, Limosine |
-| F-10 | Medium | AREX "$7" matches neither official fare |
-| F-11 | Medium | Bus 6015 fare unconfirmed on operator site (route/stops verified) |
-| F-12 | High | KTX time/fare unverified (train-dependent); "board 45 min early" has no official basis |
-| F-13 | Medium | Stanford check-in/out not on official site text (itinerary's 12:00 checkout unverified) |
-| F-14 | High | Bukchon tourist curfew (17:00–10:00, ₩100k fine) missing from itinerary |
-| F-15 | Medium | Namsan escalator suspended Mon 09:00–14:00 — Day 2 is Monday |
-| F-16 | Medium | Dept-store monthly closed day: Lotte Main closed Mon Nov 9; Nov 2 status unconfirmed |
-| F-17 | High | Gaps: Day 7 no venues, Day 8 blank, no Busan days, no flights/return plan |
-| F-18 | Medium | Myeongdong Kyoja main branch relocated 2026 → 129 Toegye-ro (KTO EN address outdated) |
-| F-19 | Info | Palace free-admission wording differs (KTO vs palace office); adult ₩3,000 same |
-| F-20 | Low | "Soul Market" at COEX unidentified from official info |
-| F-21 | Info | All itinerary USD prices unverified (site uses official KRW only) |
-| F-22 | Info | Day 9 list numbering repeats "1." (cosmetic) |
+### Collision log
 
-Status key: these are all **needs review** (published on Flagged for Review) and do not block the merge,
-per project instructions. Suggested fixes S-1…S-4 are listed on the Flagged page, not applied.
-
-## PR / merge record
-
-- PR: [#3](https://github.com/buffedlizard55-lab/Koreatrip4/pull/3) — arena/f4788cee-koreatrip4 → main (created 2026-10-21, session arena-f4788cee)
-- Merge result: merging immediately after this commit, per instructions (final result in follow-up PR)
-- GitHub Pages URL: _(pending)_
-
-## Handoff / conflict log
-
-- 2026-10-21 — Session arena-f4788cee created this board; no other sessions or claims found.
-- 2026-10-21 — T1–T8 completed by arena-f4788cee; proceeding to T9 (PR/merge/Pages) without waiting
-  for review, per instructions. No merge conflicts encountered (single session).
+- 2026-10-21 — At PR #3 merge time, discovered session `arena/12929267` had already merged PRs #1/#2
+  and deployed a root-level site (Pages live). This session had branched from the initial commit before
+  those merges were visible in its initial fetch (both sessions initially saw an empty repo and each
+  created its own COORDINATION.md claim in good faith).
+- Resolution (per protocol — discard nothing): merged `origin/main` into `arena/f4788cee-koreatrip4`;
+  only `COORDINATION.md` (add/add) and `README.md` conflicted and were combined (this file). The
+  `arena/12929267` root site is untouched and remains the live homepage at
+  https://buffedlizard55-lab.github.io/Koreatrip4/ ; this session's build ships under `docs/`
+  (reachable at `/docs/` on the same domain) with the reusable dataset in `data/itinerary.json` and
+  generators/checks in `tools/`. A future consolidation into one site is left as the owner's choice.

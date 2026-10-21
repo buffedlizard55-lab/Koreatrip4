@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A source-linked Korea itinerary dashboard for two adult travelers, covering Seoul/Myeongdong and Busan/Haeundae.">
+  <meta name="theme-color" content="#115955">
+  <title>Korea Trip Desk — itinerary dashboard</title>
+  <link rel="stylesheet" href="assets/site.css">
+  <script src="assets/data.js" defer></script>
+  <script src="assets/site.js" defer></script>
+</head>
+<body data-page="home">
+  <div id="site-header"></div>
+  <main id="main-content">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Seoul / Myeongdong → Busan / Haeundae</p>
+          <h1 id="page-title">A clear Korea itinerary, with the guesswork held out.</h1>
+          <p class="hero-copy">A travel-planning dashboard for two adults. Every confirmed operational fact is paired with a source; anything ambiguous, missing or changeable stays visible as <strong>unverified</strong> instead of being filled in.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="itinerary.html">Open the itinerary <span aria-hidden="true">→</span></a>
+            <a class="button button-secondary" href="flagged.html">Review booking blockers</a>
+          </div>
+        </div>
+        <aside class="hero-aside" aria-label="Trip summary">
+          <p class="label">Traveler profile</p>
+          <strong>Two adults · 8 days</strong>
+          <p>Base stays: Stanford Hotel Myeongdong, then L7 Haeundae. The supplied plan has a date conflict and open final days, so dates and bookings need confirmation before route commitments.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section-tight" aria-label="Important trip notice">
+      <div class="container">
+        <div class="notice">
+          <span class="notice-icon" aria-hidden="true">!</span>
+          <p><strong>Date check required.</strong> The supplied “Nov. 2, 2006 (Monday)” does not agree: 2 Nov 2006 was a Thursday. 2 Nov 2026 was a Monday, but this dashboard does not infer a replacement year. <a href="flagged.html#flag-list">Resolve the date before booking.</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="snapshot-heading">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="kicker">At a glance</p><h2 id="snapshot-heading">The review snapshot</h2></div>
+          <p>Sources were checked on 21 Oct 2026 UTC. Official hours, routes, prices, closures and reservation requirements can still change; follow each source again close to travel.</p>
+        </div>
+        <div id="dashboard-stats" class="stats-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="days-heading">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="kicker">Day by day</p><h2 id="days-heading">The supplied route, preserved</h2></div>
+          <p>Select a day to view its stops, source-backed facts, missing fields and travel cautions in one table.</p>
+        </div>
+        <div id="day-cards" class="day-grid"></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="next-heading">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="kicker">Plan with confidence</p><h2 id="next-heading">Three useful views</h2></div>
+          <p>Use the tables as a review tool — not as a substitute for current operator information or a live public-transport journey search.</p>
+        </div>
+        <div id="dashboard-quick" class="link-grid"></div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="method-heading">
+      <div class="container">
+        <div class="method"><strong id="method-heading">Verification rule.</strong> A source chip means the linked official, authority or operator page supports the nearby fact. A missing source chip means the value is intentionally left unverified — it is not a negative review or a recommendation to remove the stop.</div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+</body>
+</html>

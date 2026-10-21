@@ -1,40 +1,50 @@
-# Koreatrip4 — Korea Trip Itinerary (Seoul → Busan)
+# Korea Trip Desk — Seoul → Busan Itinerary (Nov 1–9, 2026)
 
-A verified, mobile-friendly travel itinerary site for two adults, Nov 1–9, 2026:
-8 nights based in Myeongdong, Seoul (Stanford Hotel Myeongdong), then Busan (L7 Haeundae by LOTTE).
+Static, mobile-friendly GitHub Pages site(s) for a two-adult Korea itinerary:
+**Seoul / Myeongdong** (Stanford Hotel Myeongdong) → **Busan / Haeundae** (L7 Haeundae by LOTTE).
 
-**Live site (GitHub Pages):** published from `docs/` on `main` — see `COORDINATION.md` for the URL.
+**Live site:** <https://buffedlizard55-lab.github.io/Koreatrip4/>
 
-## How to read the site
+> ℹ️ Two independent, fully verified builds of this project were produced in parallel
+> (see `COORDINATION.md`). The **root site** is the live homepage. A second,
+> deep-verification build lives under **`docs/`** (same domain, `/docs/`) with a
+> machine-readable dataset (`data/itinerary.json`). Both are conservative:
+> unconfirmed facts are left blank and flagged, never inferred.
 
-- **Dashboard** — trip overview, critical warnings, day cards.
-- **Day by Day** — the plan for each day with verified opening hours and step-by-step transit.
-- **Attractions & Markets / Food, Cafes & Bars / Shopping / Hotels** — every place in tables:
-  verified hours, closed days, prices, nearest station, status, and an **official source link**.
-- **Transport** — AREX, airport bus 6015, Namsan buses 01A/01B, subway anchors, KTX booking.
-- **Flagged for Review** — all 22 irregularities, every unverified (blank) item, suggested fixes.
-- **Sources** — the 27 official links used and the verification method.
+## Root site (live homepage)
 
-## Verification rule
+- Day-by-day itinerary review preserving the supplied plan; transport guidance anchored to
+  official operator/authority material; places, food/shopping, sources, and
+  **Flagged for review** pages; source chips on supported rows; custom 404.
+- Files: `index.html`, `itinerary.html`, `transport.html`, `places.html`,
+  `food-shopping.html`, `sources.html`, `flagged.html`, `404.html`,
+  `assets/data.js` (source/itinerary dataset), `assets/site.css`, `assets/site.js`.
+- Dependency-free static HTML/CSS/JS. Research snapshot checked 21 Oct 2026 UTC;
+  see the in-site [source register](https://buffedlizard55-lab.github.io/Koreatrip4/sources.html).
 
-Every published value was read on an **official source** (venue/operator site or official
-tourism/government publisher). Anything not confirmable is **left blank and flagged** — never
-inferred, never converted from USD. See `COORDINATION.md` for the full verification record.
+## `docs/` deep-verification build
 
-## Repo layout
+- 9 generated pages: Dashboard, Day by Day, Attractions & Markets, Food/Cafes/Bars,
+  Shopping, Transport, Hotels, **Flagged for Review** (22 flags), Sources (27 official links).
+- Every value read on an official page on 2026-10-21; blanks where unconfirmable.
+- Data & tooling: `data/itinerary.json` (source of truth), `tools/build_site.py`
+  (regenerates `docs/`), `tools/check_links.py` (link + source-integrity checks).
+- `itinerary-original.md` preserves the owner's itinerary verbatim.
 
-| Path | What it is |
-|---|---|
-| `itinerary-original.md` | The trip owner's itinerary, preserved verbatim |
-| `data/itinerary.json` | Single source of truth: days, venues, transport, flags, sources |
-| `tools/build_site.py` | Generates the static site into `docs/` from the JSON |
-| `tools/check_links.py` | Internal-link + data-integrity checks (must pass before publishing) |
-| `docs/` | Generated GitHub Pages site (do not hand-edit) |
-| `COORDINATION.md` | Multi-session task board, verification log, irregularities, PR record |
+## Verification approach (both builds)
 
-## Rebuild
+1. Claims presented as verified link to official/primary operator or authority sources.
+2. No inference from similarly named venues, map estimates, old hours, or generic brand pages.
+3. Transit times/fares/closures are live information — reconfirm on official pages before travel.
+
+## Local preview
 
 ```bash
-python3 tools/build_site.py   # regenerate docs/
-python3 tools/check_links.py  # verify links + source integrity
+python3 -m http.server 8000 --bind 0.0.0.0   # repo root → http://localhost:8000/  (docs/ at /docs/)
+python3 tools/build_site.py && python3 tools/check_links.py   # rebuild + verify the docs/ site
 ```
+
+## GitHub Pages
+
+Published from the root of `main` (legacy build). No build step or external dependency required;
+`docs/` is served as a subpath of the same site.
