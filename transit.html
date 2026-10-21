@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Public Transportation | Korea Itinerary</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <meta name="description" content="Verified public transportation routes — AREX, Limousine Bus, KTX, subway — for the Korea itinerary." />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="Korea Itinerary home">
+        <span class="mark">KR</span>
+        <span>Korea Itinerary</span>
+      </a>
+      <button class="menu-btn" aria-label="Open menu" aria-expanded="false">
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:relative;"></span>
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:absolute;top:8px;left:0;"></span>
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:absolute;top:16px;left:0;"></span>
+      </button>
+      <div class="nav-links">
+        <a href="index.html">Dashboard</a>
+        <a href="itinerary.html">Day-by-Day</a>
+        <a href="verification-table.html">Verification</a>
+        <a href="transit.html">Transit</a>
+        <a href="dining-shopping.html">Dining & Shopping</a>
+        <a href="flagged.html">Flagged for Review</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" id="main">
+    <header class="page-header">
+      <h1>Public Transportation</h1>
+      <p class="subtitle">Verified routes for airport transfers, intercity travel, and daily Seoul/Busan transit.</p>
+      <a href="index.html" class="btn secondary" style="margin-top:1rem;">← Back to Dashboard</a>
+    </header>
+
+    <section class="card">
+      <h2>Airport → Seoul (Day 1)</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Route</th>
+              <th>Mode</th>
+              <th>Time</th>
+              <th>Cost</th>
+              <th>Source</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="transit-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card mt-1">
+      <h2>Seoul → Busan (Day 9)</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Route</th>
+              <th>Mode</th>
+              <th>Time</th>
+              <th>Cost</th>
+              <th>Source</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="transit-body-2"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card mt-1">
+      <h2>Daily Seoul &amp; Busan Transit</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Route</th>
+              <th>Mode</th>
+              <th>Time</th>
+              <th>Cost</th>
+              <th>Source</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="transit-body-3"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="alert warn mt-1">
+      <strong>Unverified routes:</strong> Some taxi/uber estimates and subway routes are general estimates without official source confirmation.
+      These are left blank where no official source exists and are flagged on the <a href="flagged.html">Flagged for Review</a> page.
+    </div>
+  </div>
+
+  <footer>
+    <p>
+      Korea Itinerary · <a href="verification-table.html">Full Verification Table</a> ·
+      <a href="index.html">Back to Dashboard</a>
+    </p>
+  </footer>
+
+  <script src="data/itinerary-data.js"></script>
+  <script src="assets/app.js"></script>
+  <script>
+    function escapeHtml(text) {
+      if (!text) return "";
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function renderTable(id, items) {
+      const tbody = document.getElementById(id);
+      let html = "";
+      items.forEach((t) => {
+        const statusClass = t.verified ? "verified" : "unverified";
+        const statusLabel = t.verified ? "Verified" : "Unverified";
+        const sourceLink = t.sourceUrl && t.sourceUrl !== "#"
+          ? `<a href="${t.sourceUrl}" target="_blank" rel="noopener" style="word-break:break-all; font-size:0.8rem;">${escapeHtml(t.source)}</a>`
+          : `<span style="color:var(--muted); font-size:0.8rem;">${escapeHtml(t.source)}</span>`;
+        html += `
+          <tr>
+            <td>${escapeHtml(t.route)}</td>
+            <td>${escapeHtml(t.mode)}</td>
+            <td>${escapeHtml(t.time)}</td>
+            <td>${escapeHtml(t.cost)}</td>
+            <td class="source-cell">${sourceLink}</td>
+            <td><span class="source-tag ${statusClass}">${statusLabel}</span></td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+    }
+
+    renderTable("transit-body", ITINERARY_DATA.transit.filter(t => t.route.includes("ICN") || t.route.includes("Airport")));
+    renderTable("transit-body-2", ITINERARY_DATA.transit.filter(t => t.route.includes("Seoul Station → Busan")));
+    renderTable("transit-body-3", ITINERARY_DATA.transit.filter(t => !t.route.includes("ICN") && !t.route.includes("Airport") && !t.route.includes("Seoul Station → Busan")));
+  </script>
+</body>
+</html>

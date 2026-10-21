@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dining & Shopping | Korea Itinerary</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <meta name="description" content="Verified restaurants, cafes, markets, and stores with hours, addresses, and prices for the Korea itinerary." />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="Korea Itinerary home">
+        <span class="mark">KR</span>
+        <span>Korea Itinerary</span>
+      </a>
+      <button class="menu-btn" aria-label="Open menu" aria-expanded="false">
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:relative;"></span>
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:absolute;top:8px;left:0;"></span>
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:absolute;top:16px;left:0;"></span>
+      </button>
+      <div class="nav-links">
+        <a href="index.html">Dashboard</a>
+        <a href="itinerary.html">Day-by-Day</a>
+        <a href="verification-table.html">Verification</a>
+        <a href="transit.html">Transit</a>
+        <a href="dining-shopping.html">Dining & Shopping</a>
+        <a href="flagged.html">Flagged for Review</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" id="main">
+    <header class="page-header">
+      <h1>Dining & Shopping</h1>
+      <p class="subtitle">Verified restaurants, cafes, markets, and stores — hours, addresses, prices, and sources.</p>
+      <a href="index.html" class="btn secondary" style="margin-top:1rem;">← Back to Dashboard</a>
+    </header>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Hours</th>
+            <th>Cost</th>
+            <th>Address</th>
+            <th>Source</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="dining-body"></tbody>
+      </table>
+    </div>
+
+    <div class="alert info mt-1">
+      <strong>Note:</strong> Hours and prices change frequently. Always check the official source before visiting.
+      Items marked "Unverified" could not be confirmed from an official source.
+    </div>
+  </div>
+
+  <footer>
+    <p>
+      Korea Itinerary · <a href="verification-table.html">Full Verification Table</a> ·
+      <a href="flagged.html">Flagged for Review</a> ·
+      <a href="index.html">Back to Dashboard</a>
+    </p>
+  </footer>
+
+  <script src="data/itinerary-data.js"></script>
+  <script src="assets/app.js"></script>
+  <script>
+    function escapeHtml(text) {
+      if (!text) return "";
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Collect all dining/shopping-type activities from all days
+    const diningKeywords = ["restaurant", "cafe", "café", "market", "store", "shop", "bar", "bakery", "department", "olive young", "dinner", "lunch"];
+    const allDining = [];
+
+    ITINERARY_DATA.days.forEach((day) => {
+      day.activities.forEach((a) => {
+        const text = (a.title + " " + a.description).toLowerCase();
+        const isDining = diningKeywords.some(k => text.includes(k));
+        if (isDining) {
+          allDining.push({ day: day.id, ...a });
+        }
+      });
+    });
+
+    const tbody = document.getElementById("dining-body");
+    let html = "";
+    allDining.forEach((a) => {
+      const statusClass = a.verified ? "verified" : "unverified";
+      const statusLabel = a.verified ? "Verified" : "Unverified";
+      const sourceLink = a.sourceUrl && a.sourceUrl !== "#"
+        ? `<a href="${a.sourceUrl}" target="_blank" rel="noopener" style="word-break:break-all; font-size:0.8rem;">${escapeHtml(a.source)}</a>`
+        : `<span style="color:var(--muted); font-size:0.8rem;">${escapeHtml(a.source)}</span>`;
+      html += `
+        <tr>
+          <td><strong>Day ${a.day}</strong></td>
+          <td>${escapeHtml(a.title)}</td>
+          <td><span class="small">${escapeHtml(a.description.split(".")[0])}</span></td>
+          <td>${escapeHtml(a.time || "—")}</td>
+          <td>${escapeHtml(a.cost || "—")}</td>
+          <td>${escapeHtml(a.address || "—")}</td>
+          <td class="source-cell">${sourceLink}</td>
+          <td><span class="source-tag ${statusClass}">${statusLabel}</span></td>
+        </tr>
+      `;
+    });
+    tbody.innerHTML = html;
+  </script>
+</body>
+</html>

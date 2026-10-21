@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flagged for Review | Korea Itinerary</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <meta name="description" content="Items flagged for review — unverified entries, irregularities, and open questions in the Korea itinerary." />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="Korea Itinerary home">
+        <span class="mark">KR</span>
+        <span>Korea Itinerary</span>
+      </a>
+      <button class="menu-btn" aria-label="Open menu" aria-expanded="false">
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:relative;"></span>
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:absolute;top:8px;left:0;"></span>
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:absolute;top:16px;left:0;"></span>
+      </button>
+      <div class="nav-links">
+        <a href="index.html">Dashboard</a>
+        <a href="itinerary.html">Day-by-Day</a>
+        <a href="verification-table.html">Verification</a>
+        <a href="transit.html">Transit</a>
+        <a href="dining-shopping.html">Dining & Shopping</a>
+        <a href="flagged.html">Flagged for Review</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" id="main">
+    <header class="page-header">
+      <h1>Flagged for Review</h1>
+      <p class="subtitle">Items that need attention — unverified entries, irregularities, and open questions. Flagged items do not block the site.</p>
+      <a href="index.html" class="btn secondary" style="margin-top:1rem;">← Back to Dashboard</a>
+    </header>
+
+    <div class="alert info">
+      <strong>How to use this page:</strong> Review each flagged item, check the linked source, and decide whether to update the itinerary.
+      Items marked "Verified" on this page were checked and found correct — no change needed.
+    </div>
+
+    <div id="flagged-container"></div>
+  </div>
+
+  <footer>
+    <p>
+      Korea Itinerary · <a href="verification-table.html">Full Verification Table</a> ·
+      <a href="index.html">Back to Dashboard</a>
+    </p>
+  </footer>
+
+  <script src="data/itinerary-data.js"></script>
+  <script src="assets/app.js"></script>
+  <script>
+    function escapeHtml(text) {
+      if (!text) return "";
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    const container = document.getElementById("flagged-container");
+    let html = "";
+
+    ITINERARY_DATA.flagged.forEach((f) => {
+      const sourceLink = f.sourceUrl && f.sourceUrl !== "#"
+        ? `<a href="${f.sourceUrl}" target="_blank" rel="noopener" style="word-break:break-all;">${escapeHtml(f.source)}</a>`
+        : `<span style="color:var(--muted);">${escapeHtml(f.source)}</span>`;
+
+      html += `
+        <div class="flag-card">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.5rem; margin-bottom:0.25rem;">
+            <h4>${escapeHtml(f.id)} · ${escapeHtml(f.item)}</h4>
+            <span class="flag-status ${f.status.replace(/\s/g, '-').toLowerCase()}">${escapeHtml(f.status)}</span>
+          </div>
+          <div class="flag-meta"><strong>Day:</strong> ${escapeHtml(f.day)} &nbsp;|&nbsp; <strong>Source:</strong> ${sourceLink}</div>
+          <p style="margin:0.5rem 0;"><strong>Issue:</strong> ${escapeHtml(f.issue)}</p>
+          <p style="margin:0.5rem 0;"><strong>Recommendation:</strong> ${escapeHtml(f.recommendation)}</p>
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+  </script>
+</body>
+</html>

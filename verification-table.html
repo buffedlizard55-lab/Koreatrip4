@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verification Table | Korea Itinerary</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <meta name="description" content="Line-by-line verification of every Korea itinerary entry with official source links." />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="Korea Itinerary home">
+        <span class="mark">KR</span>
+        <span>Korea Itinerary</span>
+      </a>
+      <button class="menu-btn" aria-label="Open menu" aria-expanded="false">
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:relative;"></span>
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:absolute;top:8px;left:0;"></span>
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:absolute;top:16px;left:0;"></span>
+      </button>
+      <div class="nav-links">
+        <a href="index.html">Dashboard</a>
+        <a href="itinerary.html">Day-by-Day</a>
+        <a href="verification-table.html">Verification</a>
+        <a href="transit.html">Transit</a>
+        <a href="dining-shopping.html">Dining & Shopping</a>
+        <a href="flagged.html">Flagged for Review</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" id="main">
+    <header class="page-header">
+      <h1>Verification Table</h1>
+      <p class="subtitle">Every itinerary entry checked against official/trusted sources. Blank values = could not be confirmed.</p>
+      <a href="index.html" class="btn secondary" style="margin-top:1rem;">← Back to Dashboard</a>
+    </header>
+
+    <div class="card">
+      <h2>How to read this table</h2>
+      <ul style="margin-left:1.25rem; margin-top:0.5rem; color:var(--muted);">
+        <li><strong>Verified:</strong> confirmed from an official source with a link provided.</li>
+        <li><strong>Unverified:</strong> could not be confirmed from an official source — left blank, flagged for review.</li>
+        <li><strong>Never infer or fill in values.</strong> If it isn't sourced, it's blank.</li>
+      </ul>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Entry</th>
+            <th>Verified Value</th>
+            <th>Source</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="verification-body"></tbody>
+      </table>
+    </div>
+
+    <div class="alert info" style="margin-top:1rem;">
+      <strong>Note:</strong> All source links point to official or trusted third-party pages. Links open in a new tab.
+      Items marked "Unverified" are detailed on the <a href="flagged.html">Flagged for Review</a> page.
+    </div>
+  </div>
+
+  <footer>
+    <p>
+      Korea Itinerary · <a href="flagged.html">View all flagged items</a> ·
+      <a href="index.html">Back to Dashboard</a>
+    </p>
+  </footer>
+
+  <script src="data/itinerary-data.js"></script>
+  <script src="assets/app.js"></script>
+  <script>
+    const tbody = document.getElementById("verification-body");
+
+    function escapeHtml(text) {
+      if (!text) return "";
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function renderVerification() {
+      let rows = "";
+
+      ITINERARY_DATA.days.forEach((day) => {
+        day.activities.forEach((a) => {
+          const statusClass = a.verified ? "verified" : "unverified";
+          const statusLabel = a.verified ? "Verified" : "Unverified";
+          const sourceLink = a.sourceUrl && a.sourceUrl !== "#"
+            ? `<a href="${a.sourceUrl}" target="_blank" rel="noopener" style="word-break:break-all;">${escapeHtml(a.source)}</a>`
+            : `<span style="color:var(--muted);">${escapeHtml(a.source)}</span>`;
+
+          rows += `
+            <tr>
+              <td><strong>Day ${day.id}</strong><br><span class="small">${escapeHtml(day.weekday)} · ${escapeHtml(day.date)}</span></td>
+              <td>${escapeHtml(a.title)}</td>
+              <td class="${statusClass}">
+                ${escapeHtml(a.verified ? (a.notes || "Confirmed from official source.") : "Not confirmed — left blank")}
+              </td>
+              <td class="source-cell">${sourceLink}</td>
+              <td><span class="source-tag ${statusClass}">${statusLabel}</span></td>
+            </tr>
+          `;
+        });
+      });
+
+      tbody.innerHTML = rows;
+    }
+
+    renderVerification();
+  </script>
+</body>
+</html>
