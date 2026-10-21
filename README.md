@@ -1,48 +1,50 @@
-# Korea Trip Desk
+# Korea Trip Desk — Seoul → Busan Itinerary (Nov 1–9, 2026)
 
-A static, mobile-friendly GitHub Pages dashboard for a two-adult Korea itinerary covering **Seoul / Myeongdong** and **Busan / Haeundae**.
+Static, mobile-friendly GitHub Pages site(s) for a two-adult Korea itinerary:
+**Seoul / Myeongdong** (Stanford Hotel Myeongdong) → **Busan / Haeundae** (L7 Haeundae by LOTTE).
 
 **Live site:** <https://buffedlizard55-lab.github.io/Koreatrip4/>
 
-## What is included
+> ℹ️ Two independent, fully verified builds of this project were produced in parallel
+> (see `COORDINATION.md`). The **root site** is the live homepage. A second,
+> deep-verification build lives under **`docs/`** (same domain, `/docs/`) with a
+> machine-readable dataset (`data/itinerary.json`). Both are conservative:
+> unconfirmed facts are left blank and flagged, never inferred.
 
-- A day-by-day itinerary review that preserves the supplied plan.
-- Public-transport guidance anchored to official operator or authority material where available.
-- Separate places, food/shopping, sources, and **Flagged for review** pages.
-- Source chips on factual table rows that are supported by an official, authority, tourism-authority, or operator page.
-- Deliberately blank/`Unverified` facts when an exact branch, schedule, terminal, station, date, or route cannot be confirmed.
+## Root site (live homepage)
 
-## Verification approach
+- Day-by-day itinerary review preserving the supplied plan; transport guidance anchored to
+  official operator/authority material; places, food/shopping, sources, and
+  **Flagged for review** pages; source chips on supported rows; custom 404.
+- Files: `index.html`, `itinerary.html`, `transport.html`, `places.html`,
+  `food-shopping.html`, `sources.html`, `flagged.html`, `404.html`,
+  `assets/data.js` (source/itinerary dataset), `assets/site.css`, `assets/site.js`.
+- Dependency-free static HTML/CSS/JS. Research snapshot checked 21 Oct 2026 UTC;
+  see the in-site [source register](https://buffedlizard55-lab.github.io/Koreatrip4/sources.html).
 
-This site is intentionally conservative:
+## `docs/` deep-verification build
 
-1. It links official or primary operator sources for claims presented as verified.
-2. It does not infer missing details from similarly named venues, map estimates, old opening hours, or generic brand pages.
-3. Transit travel times, routes, fares, closures and booking rules are treated as live information and should be reconfirmed before travel.
-4. The research snapshot in the site was checked on **21 Oct 2026 UTC**. See the in-site [source register](https://buffedlizard55-lab.github.io/Koreatrip4/sources.html) for the scope of each source.
+- 9 generated pages: Dashboard, Day by Day, Attractions & Markets, Food/Cafes/Bars,
+  Shopping, Transport, Hotels, **Flagged for Review** (22 flags), Sources (27 official links).
+- Every value read on an official page on 2026-10-21; blanks where unconfirmable.
+- Data & tooling: `data/itinerary.json` (source of truth), `tools/build_site.py`
+  (regenerates `docs/`), `tools/check_links.py` (link + source-integrity checks).
+- `itinerary-original.md` preserves the owner's itinerary verbatim.
+
+## Verification approach (both builds)
+
+1. Claims presented as verified link to official/primary operator or authority sources.
+2. No inference from similarly named venues, map estimates, old hours, or generic brand pages.
+3. Transit times/fares/closures are live information — reconfirm on official pages before travel.
 
 ## Local preview
 
-The site is dependency-free. From the repository root:
-
 ```bash
-python3 -m http.server 8000 --bind 0.0.0.0
+python3 -m http.server 8000 --bind 0.0.0.0   # repo root → http://localhost:8000/  (docs/ at /docs/)
+python3 tools/build_site.py && python3 tools/check_links.py   # rebuild + verify the docs/ site
 ```
-
-Then open `http://localhost:8000/` locally. (In the Arena preview environment, use the preview URL shown by the running process rather than `localhost`.)
-
-## Files
-
-- `index.html` — dashboard
-- `itinerary.html` — day-by-day plan
-- `transport.html` — airport, Seoul, KTX and Busan transport review
-- `places.html` — stays and core attractions
-- `food-shopping.html` — food, cafés, markets, retail and activities
-- `sources.html` — reviewable source register
-- `flagged.html` — decisions and irregularities to resolve
-- `assets/data.js` — conservative source/itinerary dataset
-- `assets/site.css`, `assets/site.js` — responsive UI
 
 ## GitHub Pages
 
-The repository is configured to publish from the root of `main` using GitHub Pages. No build output or external dependency is required.
+Published from the root of `main` (legacy build). No build step or external dependency required;
+`docs/` is served as a subpath of the same site.
