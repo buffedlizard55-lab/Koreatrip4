@@ -188,11 +188,11 @@ Mondays; F-18 Kyoja 2026 relocation. All are **needs review**, non-blocking per 
 
 ---
 
-## Session `arena/fe77e3ca-koreatrip4` — final integration & independent checks (active)
+## Session `arena/fe77e3ca-koreatrip4` — final integration & independent checks (complete)
 
 | Task | Status | Owner / session | File scope | Notes |
 |---|---|---|---|---|
-| Reconcile the stale task branch with the already-merged site work, preserve both published builds, verify them, and add a non-deploying CI check | in progress | `arena/fe77e3ca-koreatrip4` | `COORDINATION.md`, `.github/workflows/site-check.yml`, `scripts/check-root-site.py` | Scope deliberately excludes `README.md`, root-site files, `docs/`, `assets/`, `data/`, `tools/`, and the existing GitHub Pages publishing configuration; those are already claimed by completed upstream sessions. |
+| Reconcile the stale task branch with the already-merged site work, preserve both published builds, verify them, and add a non-deploying CI check | complete | `arena/fe77e3ca-koreatrip4` | `COORDINATION.md`, `.github/workflows/site-check.yml`, `scripts/check-root-site.py` | PR #6 merged; both sites and the post-merge Pages build checked. Scope excluded all claimed site/data files and publishing configuration. Root-source compliance caveat is documented below. |
 
 ### Claim and current context
 
@@ -206,6 +206,8 @@ Mondays; F-18 Kyoja 2026 relocation. All are **needs review**, non-blocking per 
 
 - Existing docs build: `python3 tools/check_links.py` passed — 9 pages, 46 venues and 7 transport rows; local links and source references resolve.
 - Root build: `PYTHONDONTWRITEBYTECODE=1 python3 scripts/check-root-site.py` passed — 11 root HTML pages, all local references and HTML anchors resolve. No published page or data file was changed.
-- GitHub Pages API: status `built`, public URL `https://buffedlizard55-lab.github.io/Koreatrip4/`, source `main:/`, HTTPS enforced. Latest observed Pages build at `2026-10-21T08:05:38Z` was for commit `d6d761a`; the `gh run list` shows a successful legacy `pages build and deployment` run on `main`.
+- GitHub Pages API: status `built`, public URL `https://buffedlizard55-lab.github.io/Koreatrip4/`, source `main:/`, HTTPS enforced. Latest observed Pages build at `2026-10-21T08:10:47Z` was for merge commit `104a3b1a7fc1e1beb06d2e152647528eb18b3fec`; the legacy `pages build and deployment` run succeeded on `main`.
 - The PR #5 `Deploy to GitHub Pages` workflow has failed on the session branch (runs `39566502269`, `39566673804`, `39567010091`), but that does not block the verified legacy `main:/` deployment. This session's `site-check.yml` is non-deploying and runs the two local integrity checks.
-- Pull request: not opened yet. This session's isolated CI change is ready for PR after its required rebase/push. After merge, record the PR result and re-check the latest Pages build for the merge commit.
+- PR [#6](https://github.com/buffedlizard55-lab/Koreatrip4/pull/6) from `arena/fe77e3ca-koreatrip4` was merged into `main` at `2026-10-21T08:10:46Z`; merge commit `104a3b1a7fc1e1beb06d2e152647528eb18b3fec`.
+- Post-merge site-check run `39567326032` passed; legacy Pages build/deploy run `39567325782` passed. GitHub Pages API reports **built** for the merge commit; public URL `https://buffedlizard55-lab.github.io/Koreatrip4/`, source `main:/`, HTTPS enforced.
+- PR #6 changed no site content or Pages configuration; it adds independent checks only. The source-compliance caution above remains a handoff for any future work on the claimed root dataset.
