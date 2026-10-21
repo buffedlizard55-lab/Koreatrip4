@@ -1,0 +1,27 @@
+name: Check itinerary sites
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-checks:
+    name: Check published site links and itinerary data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Check the deep-verification docs site and source references
+        run: python3 tools/check_links.py
+      - name: Check the live root site and its local links
+        run: python3 scripts/check-root-site.py
