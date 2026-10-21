@@ -196,15 +196,16 @@ Mondays; F-18 Kyoja 2026 relocation. All are **needs review**, non-blocking per 
 
 ### Claim and current context
 
-- The task was initially claimed and pushed before implementation as `822cc84`. At the next required `git pull --rebase origin main`, this branch discovered that main had advanced: PRs from sessions `arena/12929267-koreatrip4` and `arena-f4788cee-koreatrip4` had already delivered the requested site work.
-- `main` contains the live root site and a separate deep-verification build under `docs/`; the prior sessions' scopes and source findings are retained above. Their files are not being replaced or consolidated by this session.
+- The task was initially claimed and pushed before implementation as `822cc84`. Rebase inspection found main had advanced through PRs #1–#5 from sessions `arena/12929267`, `arena-f4788cee` and `arena/5d411753` while this branch was being prepared.
+- Main now serves the PR #5 root-site build, while the earlier deep-verification site remains under `docs/`. Historical coordination/source logs for the earlier merged sessions are retained above; no site files from those sessions were overwritten or consolidated here.
+- **Source-compliance caution:** the latest root dataset (`data/itinerary-data.js`, owned by the merged PR #5 session) includes third-party URLs such as iVisitKorea, Booking.com, CatchTable, EatingSeoul, TripAdvisor, Autoreserve and Koreatodo. These are not official sources under the user's strict requirement and must not be presented as official verification. The root dataset also encodes 2026 while preserving a date-conflict flag. This session does not edit those claimed files. The earlier `/docs/` deep-verification build is the recorded official-source-only alternative.
 - The prior draft built independently under `docs/` was not carried forward because that path is owned by the merged `arena-f4788cee` build. Its Crystal Jade and Seoul Station address claims were conservatively removed from verified values before the draft was abandoned.
-- The published Pages source is the repository root, per the existing README and coordination record. This session will not add a second deploy workflow or change the Pages source.
+- GitHub Pages is configured in the Pages API as legacy `main:/` (not the PR #5 Actions workflow). This session will not alter either publishing configuration or the claimed site files; it adds only independent checks.
 
 ### Verification, checks, PR and deployment
 
 - Existing docs build: `python3 tools/check_links.py` passed — 9 pages, 46 venues and 7 transport rows; local links and source references resolve.
-- Root build: `PYTHONDONTWRITEBYTECODE=1 python3 scripts/check-root-site.py` passed — 8 pages, all local references and HTML anchors resolve. No published page or data file was changed.
-- GitHub Pages API: status `built`, public URL `https://buffedlizard55-lab.github.io/Koreatrip4/`, source `main:/`, HTTPS enforced. Latest observed Pages build at `2026-10-21T08:02:48Z` was for commit `35f2de2`; `gh run list` also showed successful `pages build and deployment` runs on `main`.
-- Existing site outputs remain at the root URL and `/docs/`. No second publishing workflow was added; `site-check.yml` only runs the two integrity checks.
+- Root build: `PYTHONDONTWRITEBYTECODE=1 python3 scripts/check-root-site.py` passed — 11 root HTML pages, all local references and HTML anchors resolve. No published page or data file was changed.
+- GitHub Pages API: status `built`, public URL `https://buffedlizard55-lab.github.io/Koreatrip4/`, source `main:/`, HTTPS enforced. Latest observed Pages build at `2026-10-21T08:05:38Z` was for commit `d6d761a`; the `gh run list` shows a successful legacy `pages build and deployment` run on `main`.
+- The PR #5 `Deploy to GitHub Pages` workflow has failed on the session branch (runs `39566502269`, `39566673804`, `39567010091`), but that does not block the verified legacy `main:/` deployment. This session's `site-check.yml` is non-deploying and runs the two local integrity checks.
 - Pull request: not opened yet. This session's isolated CI change is ready for PR after its required rebase/push. After merge, record the PR result and re-check the latest Pages build for the merge commit.

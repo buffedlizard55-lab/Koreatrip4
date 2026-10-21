@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Check the live root site's static HTML links and page anchors.
+"""Check the current root site's static HTML links and page anchors.
 
 The deep-verification build under docs/ is checked separately by
 `tools/check_links.py`; this script intentionally does not modify or generate
-files in either published site.
+files in either published site. JavaScript template links containing `${...}`
+are runtime values and are not treated as filesystem paths here.
 """
 from __future__ import annotations
 
@@ -13,25 +14,28 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-HTML_PAGES = (
+REQUIRED_PAGES = (
     "index.html",
     "itinerary.html",
-    "transport.html",
-    "places.html",
-    "food-shopping.html",
-    "sources.html",
+    "verification-table.html",
+    "transit.html",
+    "dining-shopping.html",
     "flagged.html",
     "404.html",
 )
+HTML_PAGES = tuple(sorted(path.name for path in ROOT.glob("*.html")))
 errors: list[str] = []
 contents: dict[str, str] = {}
 ids_by_page: dict[str, set[str]] = {}
 
+for page in REQUIRED_PAGES:
+    if not (ROOT / page).is_file():
+        errors.append(f"missing current root-site page: {page}")
+if not HTML_PAGES:
+    errors.append("no root HTML pages found")
+
 for page in HTML_PAGES:
     path = ROOT / page
-    if not path.is_file():
-        errors.append(f"missing root page: {page}")
-        continue
     text = path.read_text(encoding="utf-8")
     contents[page] = text
     ids_by_page[page] = set(re.findall(r'\bid="([^"]+)"', text))
@@ -40,7 +44,7 @@ for page in HTML_PAGES:
 
 for page, text in contents.items():
     for ref in re.findall(r'(?:href|src)="([^"]+)"', text):
-        if ref.startswith("//"):
+        if ref.startswith("//") or "${" in ref:
             continue
         parsed = urlsplit(ref)
         if parsed.scheme or parsed.netloc:
@@ -63,7 +67,15 @@ for page, text in contents.items():
             if target_page in ids_by_page and unquote(parsed.fragment) not in ids_by_page[target_page]:
                 errors.append(f"{page}: missing anchor #{parsed.fragment} in {target_page}")
 
-for asset in ("assets/data.js", "assets/site.css", "assets/site.js"):
+for asset in (
+    "assets/styles.css",
+    "assets/app.js",
+    "assets/data.js",
+    "data/itinerary-data.js",
+    # Retained legacy pages are also included in the root HTML scan.
+    "assets/site.css",
+    "assets/site.js",
+):
     if not (ROOT / asset).is_file():
         errors.append(f"missing root-site asset: {asset}")
 
