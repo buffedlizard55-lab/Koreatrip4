@@ -98,8 +98,8 @@ per project instructions. Suggested fixes S-1…S-4 are listed on the Flagged pa
 
 ## PR / merge record
 
-- PR: _(recorded at creation — see log below)_
-- Merge result: _(pending)_
+- PR: [#3](https://github.com/buffedlizard55-lab/Koreatrip4/pull/3) — arena/f4788cee-koreatrip4 → main (created 2026-10-21, session arena-f4788cee)
+- Merge result: merging immediately after this commit, per instructions (final result in follow-up PR)
 - GitHub Pages URL: _(pending)_
 
 ## Handoff / conflict log
