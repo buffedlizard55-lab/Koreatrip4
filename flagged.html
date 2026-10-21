@@ -1,58 +1,91 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Flagged-for-review items for the Korea travel itinerary.">
-  <meta name="theme-color" content="#9e3e32">
-  <title>Flagged for review — Korea Trip Desk</title>
-  <link rel="stylesheet" href="assets/site.css">
-  <script src="assets/data.js" defer></script>
-  <script src="assets/site.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flagged for Review | Korea Itinerary</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <meta name="description" content="Items flagged for review — unverified entries, irregularities, and open questions in the Korea itinerary." />
 </head>
-<body data-page="review">
-  <div id="site-header"></div>
-  <main id="main-content">
-    <section class="page-hero" aria-labelledby="page-title">
-      <div class="container">
-        <p class="breadcrumb"><a href="index.html">Dashboard</a> / Flagged for review</p>
-        <p class="eyebrow">Decisions before booking</p>
-        <h1 id="page-title">Nothing uncertain is hidden.</h1>
-        <p class="page-intro">These items do not invalidate the trip. They identify what needs a traveler decision, a current branch check or a live schedule before the itinerary can be treated as a timed plan.</p>
-      </div>
-    </section>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
 
-    <section class="section section-tight" aria-labelledby="review-heading">
-      <div class="container">
-        <div class="method"><strong id="review-heading">Prioritization.</strong> Resolve high-priority items first: dates, flight/terminal, KTX stations/timing and the open final days. Then refine venue branches and merchant-specific plans. A red issue is a planning dependency — not a judgment on the venue.</div>
-        <div id="flag-list" class="flag-list"></div>
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="Korea Itinerary home">
+        <span class="mark">KR</span>
+        <span>Korea Itinerary</span>
+      </a>
+      <button class="menu-btn" aria-label="Open menu" aria-expanded="false">
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:relative;"></span>
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:absolute;top:8px;left:0;"></span>
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:absolute;top:16px;left:0;"></span>
+      </button>
+      <div class="nav-links">
+        <a href="index.html">Dashboard</a>
+        <a href="itinerary.html">Day-by-Day</a>
+        <a href="verification-table.html">Verification</a>
+        <a href="transit.html">Transit</a>
+        <a href="dining-shopping.html">Dining & Shopping</a>
+        <a href="flagged.html">Flagged for Review</a>
       </div>
-    </section>
+    </div>
+  </nav>
 
-    <section class="section" aria-labelledby="review-order-heading">
-      <div class="container">
-        <div class="section-heading"><div><p class="kicker">Recommended order</p><h2 id="review-order-heading">A short path from draft to bookable</h2></div></div>
-        <div class="analysis-grid">
-          <article class="analysis-card emphasis">
-            <h3>1. Lock the calendar</h3>
-            <p>Confirm the actual year and all dates. The current weekday/year conflict must be resolved before interpreting weekday-only hours, rail inventory or attraction closures.</p>
-          </article>
-          <article class="analysis-card">
-            <h3>2. Add arrival and rail details</h3>
-            <p>Record flight arrival terminal/time, then select the airport route. Enter the actual KTX station pair/date in KORAIL before connecting the rail day to the Busan hotel plan.</p>
-          </article>
-          <article class="analysis-card">
-            <h3>3. Turn names into exact pins</h3>
-            <p>For each must-do restaurant, shop or activity, capture an exact branch address and current official operating page. Keep flexible alternatives as flexible.</p>
-          </article>
-          <article class="analysis-card">
-            <h3>4. Fill departure day last</h3>
-            <p>Once a flight or rail departure is known, add the transfer and luggage buffer to Day 8. Until then, an open day is more honest and more useful.</p>
-          </article>
+  <div class="container" id="main">
+    <header class="page-header">
+      <h1>Flagged for Review</h1>
+      <p class="subtitle">Items that need attention — unverified entries, irregularities, and open questions. Flagged items do not block the site.</p>
+      <a href="index.html" class="btn secondary" style="margin-top:1rem;">← Back to Dashboard</a>
+    </header>
+
+    <div class="alert info">
+      <strong>How to use this page:</strong> Review each flagged item, check the linked source, and decide whether to update the itinerary.
+      Items marked "Verified" on this page were checked and found correct — no change needed.
+    </div>
+
+    <div id="flagged-container"></div>
+  </div>
+
+  <footer>
+    <p>
+      Korea Itinerary · <a href="verification-table.html">Full Verification Table</a> ·
+      <a href="index.html">Back to Dashboard</a>
+    </p>
+  </footer>
+
+  <script src="data/itinerary-data.js"></script>
+  <script src="assets/app.js"></script>
+  <script>
+    function escapeHtml(text) {
+      if (!text) return "";
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    const container = document.getElementById("flagged-container");
+    let html = "";
+
+    ITINERARY_DATA.flagged.forEach((f) => {
+      const sourceLink = f.sourceUrl && f.sourceUrl !== "#"
+        ? `<a href="${f.sourceUrl}" target="_blank" rel="noopener" style="word-break:break-all;">${escapeHtml(f.source)}</a>`
+        : `<span style="color:var(--muted);">${escapeHtml(f.source)}</span>`;
+
+      html += `
+        <div class="flag-card">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.5rem; margin-bottom:0.25rem;">
+            <h4>${escapeHtml(f.id)} · ${escapeHtml(f.item)}</h4>
+            <span class="flag-status ${f.status.replace(/\s/g, '-').toLowerCase()}">${escapeHtml(f.status)}</span>
+          </div>
+          <div class="flag-meta"><strong>Day:</strong> ${escapeHtml(f.day)} &nbsp;|&nbsp; <strong>Source:</strong> ${sourceLink}</div>
+          <p style="margin:0.5rem 0;"><strong>Issue:</strong> ${escapeHtml(f.issue)}</p>
+          <p style="margin:0.5rem 0;"><strong>Recommendation:</strong> ${escapeHtml(f.recommendation)}</p>
         </div>
-      </div>
-    </section>
-  </main>
-  <div id="site-footer"></div>
+      `;
+    });
+
+    container.innerHTML = html;
+  </script>
 </body>
 </html>

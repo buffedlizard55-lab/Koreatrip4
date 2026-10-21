@@ -1,58 +1,122 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Day-by-day Korea itinerary with source-backed facts and visible review flags.">
-  <meta name="theme-color" content="#115955">
-  <title>Itinerary — Korea Trip Desk</title>
-  <link rel="stylesheet" href="assets/site.css">
-  <script src="assets/data.js" defer></script>
-  <script src="assets/site.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day-by-Day Itinerary | Korea Itinerary</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <meta name="description" content="Verified day-by-day South Korea itinerary — Seoul (Myeongdong) and Busan (Haeundae), Days 1-9." />
 </head>
-<body data-page="itinerary">
-  <div id="site-header"></div>
-  <main id="main-content">
-    <section class="page-hero" aria-labelledby="page-title">
-      <div class="container">
-        <p class="breadcrumb"><a href="index.html">Dashboard</a> / Itinerary</p>
-        <p class="eyebrow">Day-by-day review</p>
-        <h1 id="page-title">The plan, one careful row at a time.</h1>
-        <p class="page-intro">All supplied itinerary entries appear below. A green verified label means the linked source supports the stated fact. Amber qualified means only part of the plan is source-supported. Red review means a decision or exact identity is still missing.</p>
-      </div>
-    </section>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
 
-    <section class="section section-tight" aria-labelledby="itinerary-heading">
-      <div class="container">
-        <div class="method"><strong id="itinerary-heading">How to read this table.</strong> “Unverified” is deliberate. It avoids converting a generic venue name, a past opening hour or an unselected station into a false certainty. Search or filter to focus on one day, status or place.</div>
-        <div id="itinerary-table"></div>
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand" aria-label="Korea Itinerary home">
+        <span class="mark">KR</span>
+        <span>Korea Itinerary</span>
+      </a>
+      <button class="menu-btn" aria-label="Open menu" aria-expanded="false">
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:relative;"></span>
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:absolute;top:8px;left:0;"></span>
+        <span style="display:block;width:22px;height:2px;background:currentColor;position:absolute;top:16px;left:0;"></span>
+      </button>
+      <div class="nav-links">
+        <a href="index.html">Dashboard</a>
+        <a href="itinerary.html">Day-by-Day</a>
+        <a href="verification-table.html">Verification</a>
+        <a href="transit.html">Transit</a>
+        <a href="dining-shopping.html">Dining & Shopping</a>
+        <a href="flagged.html">Flagged for Review</a>
       </div>
-    </section>
+    </div>
+  </nav>
 
-    <section class="section" aria-labelledby="itinerary-analysis-heading">
-      <div class="container">
-        <div class="section-heading"><div><p class="kicker">Plan analysis</p><h2 id="itinerary-analysis-heading">What is strong — and what needs a decision</h2></div></div>
-        <div class="analysis-grid">
-          <article class="analysis-card emphasis">
-            <h3>Source-backed anchors</h3>
-            <p>Stanford Hotel Myeongdong, N Seoul Tower access, palace/ceremony timing, Café Onion, Gwangjang, DDP, verified Seongsu locations, Haeundae Beach, Haedong Yonggungsa and Jagalchi all have a linked authority or operator source.</p>
-          </article>
-          <article class="analysis-card">
-            <h3>Do not over-sequence Day 1 or Day 5</h3>
-            <p>Arrival terminal/time is absent, while the KTX leg has no selected stations or train. Keep dinner and hotel-transfer timing flexible until the actual flight and rail booking are known.</p>
-          </article>
-          <article class="analysis-card">
-            <h3>Venue names need a branch, not just a brand</h3>
-            <p>Crystal Jade, several Seongsu fashion stops, and multiple restaurant names are retained but not routed as fixed points. A current operator-confirmed address is needed before they become navigable stops.</p>
-          </article>
-          <article class="analysis-card">
-            <h3>Open days are useful placeholders</h3>
-            <p>Days 7 and 8 stay open because no activities or departure transfer were provided. They are not populated with assumptions. Add choices only after dates and departure details are confirmed.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-  </main>
-  <div id="site-footer"></div>
+  <div class="container" id="main">
+    <header class="page-header">
+      <h1>Day-by-Day Itinerary</h1>
+      <p class="subtitle">Seoul (Myeongdong) → Busan (Haeundae) · Oct 31 – Nov 9, 2026 · 2 adults</p>
+      <a href="index.html" class="btn secondary" style="margin-top:1rem;">← Back to Dashboard</a>
+    </header>
+
+    <div id="days-container"></div>
+  </div>
+
+  <footer>
+    <p>
+      Korea Itinerary · Verified entries with official source links · 
+      <a href="verification-table.html">Full Verification Table</a> ·
+      <a href="flagged.html">Flagged for Review</a>
+    </p>
+  </footer>
+
+  <script src="data/itinerary-data.js"></script>
+  <script src="assets/app.js"></script>
+  <script>
+    // Render day-by-day itinerary from ITINERARY_DATA
+    const container = document.getElementById("days-container");
+
+    function renderDays() {
+      ITINERARY_DATA.days.forEach((day) => {
+        const el = document.createElement("article");
+        el.className = "day-card";
+
+        const activitiesHtml = day.activities
+          .map((a) => {
+            const verifiedClass = a.verified ? "verified" : "unverified";
+            const verifiedLabel = a.verified ? "Verified" : "Unverified";
+            const sourceHtml = a.sourceUrl && a.sourceUrl !== "#"
+              ? `<a href="${a.sourceUrl}" target="_blank" rel="noopener">${a.source}</a>`
+              : `<span>${a.source}</span>`;
+            const sourceTag = a.sourceUrl && a.sourceUrl !== "#"
+              ? `<span class="source-tag ${verifiedClass}">${verifiedLabel}</span>`
+              : `<span class="source-tag ${verifiedClass}">${verifiedLabel}</span>`;
+            const flagHtml = a.notes && a.notes.includes("FLAGGED")
+              ? `<div class="flag-note">⚠ ${a.notes}</div>`
+              : "";
+
+            return `
+              <div class="activity">
+                <div>
+                  <div class="activity-title">${escapeHtml(a.title)}</div>
+                  <div class="small" style="color:var(--muted);">${escapeHtml(a.time || "")}</div>
+                </div>
+                <div class="activity-desc">${escapeHtml(a.description)}</div>
+                <div class="activity-meta">
+                  <span class="meta-chip"><strong>Cost:</strong> ${escapeHtml(a.cost || "—")}</span>
+                  <span class="meta-chip"><strong>Address:</strong> ${escapeHtml(a.address || "—")}</span>
+                </div>
+                <div class="activity-source">${sourceHtml} ${sourceTag}</div>
+                ${flagHtml}
+              </div>
+            `;
+          })
+          .join("");
+
+        el.innerHTML = `
+          <div class="day-header">
+            <div class="day-number">${day.id}</div>
+            <div class="day-info">
+              <div class="day-title">${escapeHtml(day.day)} · ${escapeHtml(day.weekday)} · ${escapeHtml(day.date)}</div>
+              <div class="day-sub">${escapeHtml(day.title)}</div>
+              <div class="day-location">${escapeHtml(day.location)}</div>
+            </div>
+          </div>
+          <div class="day-summary">${escapeHtml(day.summary)}</div>
+          ${activitiesHtml}
+        `;
+        container.appendChild(el);
+      });
+    }
+
+    function escapeHtml(text) {
+      if (!text) return "";
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    renderDays();
+  </script>
 </body>
 </html>

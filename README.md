@@ -1,50 +1,60 @@
-# Korea Trip Desk — Seoul → Busan Itinerary (Nov 1–9, 2026)
+# Koreatrip4 — South Korea Itinerary Site
 
-Static, mobile-friendly GitHub Pages site(s) for a two-adult Korea itinerary:
-**Seoul / Myeongdong** (Stanford Hotel Myeongdong) → **Busan / Haeundae** (L7 Haeundae by LOTTE).
+A verified, mobile-friendly travel itinerary site for two adults visiting Seoul (Myeongdong) and Busan (Haeundae), October 31 – November 9, 2026.
 
-**Live site:** <https://buffedlizard55-lab.github.io/Koreatrip4/>
+## What this is
 
-> ℹ️ Two independent, fully verified builds of this project were produced in parallel
-> (see `COORDINATION.md`). The **root site** is the live homepage. A second,
-> deep-verification build lives under **`docs/`** (same domain, `/docs/`) with a
-> machine-readable dataset (`data/itinerary.json`). Both are conservative:
-> unconfirmed facts are left blank and flagged, never inferred.
+A static, dashboard-style site with day-by-day itinerary, verification table, public transit routes, dining/shopping directory, and a flagged-for-review page. Every entry is checked against official sources with links provided.
 
-## Root site (live homepage)
+## Site structure
 
-- Day-by-day itinerary review preserving the supplied plan; transport guidance anchored to
-  official operator/authority material; places, food/shopping, sources, and
-  **Flagged for review** pages; source chips on supported rows; custom 404.
-- Files: `index.html`, `itinerary.html`, `transport.html`, `places.html`,
-  `food-shopping.html`, `sources.html`, `flagged.html`, `404.html`,
-  `assets/data.js` (source/itinerary dataset), `assets/site.css`, `assets/site.js`.
-- Dependency-free static HTML/CSS/JS. Research snapshot checked 21 Oct 2026 UTC;
-  see the in-site [source register](https://buffedlizard55-lab.github.io/Koreatrip4/sources.html).
+| Page | Description |
+|------|-------------|
+| `index.html` | Landing dashboard with trip overview and quick links |
+| `itinerary.html` | Day-by-day schedule (Days 1–9) |
+| `verification-table.html` | Line-by-line verification with source links |
+| `transit.html` | Public transportation (AREX, Limousine Bus, KTX, subway) |
+| `dining-shopping.html` | Restaurants, cafes, markets, stores |
+| `flagged.html` | Items flagged for review (unverified / irregularities) |
 
-## `docs/` deep-verification build
+## Data
 
-- 9 generated pages: Dashboard, Day by Day, Attractions & Markets, Food/Cafes/Bars,
-  Shopping, Transport, Hotels, **Flagged for Review** (22 flags), Sources (27 official links).
-- Every value read on an official page on 2026-10-21; blanks where unconfirmable.
-- Data & tooling: `data/itinerary.json` (source of truth), `tools/build_site.py`
-  (regenerates `docs/`), `tools/check_links.py` (link + source-integrity checks).
-- `itinerary-original.md` preserves the owner's itinerary verbatim.
+`data/itinerary-data.js` — single source of truth for all itinerary entries, transit routes, and flagged items. Each entry includes:
+- `verified` boolean
+- `source` and `sourceUrl` (official/trusted source)
+- `notes` with verification details
 
-## Verification approach (both builds)
+## Verification standard
 
-1. Claims presented as verified link to official/primary operator or authority sources.
-2. No inference from similarly named venues, map estimates, old hours, or generic brand pages.
-3. Transit times/fares/closures are live information — reconfirm on official pages before travel.
+- Every table row must have a source link to an official site.
+- If a value can't be confirmed from an official source, it is left blank and flagged as unverified.
+- Never infer or fill in values.
 
-## Local preview
+## Local development
+
+Open any HTML file directly in a browser, or serve with a local static server:
 
 ```bash
-python3 -m http.server 8000 --bind 0.0.0.0   # repo root → http://localhost:8000/  (docs/ at /docs/)
-python3 tools/build_site.py && python3 tools/check_links.py   # rebuild + verify the docs/ site
+python3 -m http.server 8000
+# then visit http://localhost:8000
 ```
 
-## GitHub Pages
+## Deployment
 
-Published from the root of `main` (legacy build). No build step or external dependency required;
-`docs/` is served as a subpath of the same site.
+GitHub Pages is configured via `.github/workflows/pages.yml`. Pushing to `arena/5d411753-koreatrip4` triggers deployment.
+
+## Sources
+
+Primary official/trusted sources used:
+- [VisitKorea (Korea Tourism Organization)](https://english.visitkorea.or.kr/)
+- [Seoul Metropolitan Government](https://english.seoul.go.kr/)
+- [Visit Seoul](https://english.visitseoul.net/)
+- [Stanford Hotel Myeongdong](https://stanford.webhelper.co.kr/myeongdong/en/)
+- [L7 Haeundae by LOTTE Hotels](https://www.lottehotel.com/)
+- [Michelin Guide Seoul](https://guide.michelin.com/)
+- [KORAIL / Welcome Busan (KTX)](https://welcome-busan.com/)
+- Operator official pages (N Seoul Tower, DDP, Olive Young, etc.)
+
+## License
+
+MIT
